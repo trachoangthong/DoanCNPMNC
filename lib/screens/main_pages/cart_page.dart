@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import '../../constants/app_colors.dart';
 import '../../data/database_helper.dart';
 import '../../models/discount_coupon.dart';
+import '../../models/user_model.dart';
+import '../../services/auth_service.dart';
 import '../../services/shop_provider.dart';
 import '../../models/order.dart';
 import '../../models/product.dart';
@@ -339,6 +341,27 @@ class _CheckoutSheetState extends State<_CheckoutSheet> {
   bool hasCouponError = false;
   bool isApplyingCoupon = false;
   bool isSubmitting = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSignedInUser();
+  }
+
+  Future<void> _loadSignedInUser() async {
+    final UserModel? user = await AuthService.currentUser();
+    if (!mounted || user == null) {
+      return;
+    }
+
+    nameController.text = user.fullName;
+    phoneController.text = user.phone;
+    final String address = user.address.trim();
+    final String city = user.city.trim();
+    addressController.text = address.isEmpty || city.isEmpty
+        ? address
+        : '$address, $city';
+  }
 
   @override
   void dispose() {

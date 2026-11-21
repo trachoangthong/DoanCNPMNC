@@ -15,6 +15,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController avatarController = TextEditingController(
     text: 'https://i.pravatar.cc/300',
@@ -32,6 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
     fullNameController.dispose();
     emailController.dispose();
     phoneController.dispose();
+    addressController.dispose();
     passwordController.dispose();
     avatarController.dispose();
     super.dispose();
@@ -70,6 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
         fullName: fullNameController.text.trim(),
         email: normalizedEmail,
         phone: phoneController.text.trim(),
+        address: addressController.text.trim(),
         password: passwordController.text.trim(),
         avatar: avatarController.text.trim(),
         gender: gender,
@@ -311,7 +314,25 @@ class _RegisterPageState extends State<RegisterPage> {
                       setState(() => city = value ?? city);
                     },
                   ),
-                  
+                  const SizedBox(height: 14),
+                  TextFormField(
+                    controller: addressController,
+                    keyboardType: TextInputType.streetAddress,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: InputDecoration(
+                      labelText: 'Địa chỉ nhận hàng',
+                      prefixIcon: const Icon(Icons.location_on_outlined),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Vui lòng nhập địa chỉ nhận hàng';
+                      }
+                      return null;
+                    },
+                  ),
                   const SizedBox(height: 8),
                   CheckboxListTile(
                     value: agree,

@@ -550,6 +550,9 @@ class _UserManager extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Text('${user.email} - Quyền: ${user.role}'),
+                      Text(
+                        'Địa chỉ: ${<String>[user.address.trim(), user.city.trim()].where((String part) => part.isNotEmpty).join(', ')}',
+                      ),
                       if (!isAdmin) ...<Widget>[
                         const SizedBox(height: 4),
                         Wrap(
@@ -610,6 +613,9 @@ class _UserManager extends StatelessWidget {
     final TextEditingController phoneCtrl = TextEditingController(
       text: user.phone,
     );
+    final TextEditingController addressCtrl = TextEditingController(
+      text: user.address,
+    );
     String selectedRole = user.role;
 
     showDialog<void>(
@@ -627,6 +633,10 @@ class _UserManager extends StatelessWidget {
               TextField(
                 controller: phoneCtrl,
                 decoration: const InputDecoration(labelText: 'SĐT'),
+              ),
+              TextField(
+                controller: addressCtrl,
+                decoration: const InputDecoration(labelText: 'Địa chỉ'),
               ),
               DropdownButtonFormField<String>(
                 initialValue: selectedRole,
@@ -666,6 +676,7 @@ class _UserManager extends StatelessWidget {
                   avatar: user.avatar,
                   gender: user.gender,
                   city: user.city,
+                  address: addressCtrl.text,
                   role: selectedRole,
                 );
                 shop.updateUser(updatedUser);

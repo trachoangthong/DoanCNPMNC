@@ -151,6 +151,7 @@ class AuthService {
         avatar: existingAdmin.avatar,
         gender: existingAdmin.gender,
         city: existingAdmin.city,
+        address: existingAdmin.address,
         role: 'admin',
       );
       await _writeUsers(users);
@@ -185,6 +186,7 @@ class AuthService {
             : user.avatar.trim(),
         gender: user.gender,
         city: user.city,
+        address: user.address.trim(),
         role: user.role,
       );
 
@@ -264,6 +266,7 @@ class AuthService {
       avatar: users[index].avatar,
       gender: users[index].gender,
       city: users[index].city,
+      address: users[index].address,
       role: users[index].role,
     );
 
@@ -297,6 +300,7 @@ class AuthService {
     required String fullName,
     required String email,
     required String phone,
+    required String address,
   }) async {
     final String normalizedCurrentEmail = currentEmail.trim().toLowerCase();
     final String normalizedEmail = email.trim().toLowerCase();
@@ -327,6 +331,7 @@ class AuthService {
       avatar: oldUser.avatar,
       gender: oldUser.gender,
       city: oldUser.city,
+      address: address.trim(),
       role: oldUser.role,
     );
     users[index] = updatedUser;
@@ -365,6 +370,7 @@ class AuthService {
       avatar: oldUser.avatar,
       gender: oldUser.gender,
       city: oldUser.city,
+      address: oldUser.address,
       role: oldUser.role,
     );
     users[index] = updatedUser;

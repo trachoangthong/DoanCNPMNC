@@ -21,6 +21,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   late final TextEditingController _nameController;
   late final TextEditingController _emailController;
   late final TextEditingController _phoneController;
+  late final TextEditingController _addressController;
   bool _isSaving = false;
 
   @override
@@ -29,6 +30,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
     _nameController = TextEditingController(text: widget.user.fullName);
     _emailController = TextEditingController(text: widget.user.email);
     _phoneController = TextEditingController(text: widget.user.phone);
+    _addressController = TextEditingController(text: widget.user.address);
   }
 
   @override
@@ -36,6 +38,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
     _nameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
+    _addressController.dispose();
     super.dispose();
   }
 
@@ -51,6 +54,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
         fullName: _nameController.text,
         email: _emailController.text,
         phone: _phoneController.text,
+        address: _addressController.text,
       );
       if (!mounted) {
         return;
@@ -214,6 +218,22 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                 ),
                 validator: (String? value) =>
                     _validateRequired(value, 'số điện thoại'),
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _addressController,
+                keyboardType: TextInputType.streetAddress,
+                textCapitalization: TextCapitalization.words,
+                minLines: 2,
+                maxLines: 3,
+                decoration: const InputDecoration(
+                  labelText: 'Địa chỉ nhận hàng',
+                  prefixIcon: Icon(Icons.location_on_outlined),
+                  border: OutlineInputBorder(),
+                  alignLabelWithHint: true,
+                ),
+                validator: (String? value) =>
+                    _validateRequired(value, 'địa chỉ'),
               ),
               const SizedBox(height: 20),
               FilledButton(

@@ -6,6 +6,7 @@ class UserModel {
   final String avatar;
   final String gender;
   final String city;
+  final String address;
   final String role;
 
   UserModel({
@@ -16,6 +17,7 @@ class UserModel {
     required this.avatar,
     required this.gender,
     required this.city,
+    this.address = '',
     this.role = 'user',
   });
 
@@ -28,6 +30,7 @@ class UserModel {
       "avatar": avatar,
       "gender": gender,
       "city": city,
+      "address": address,
       "role": role,
     };
   }
@@ -41,6 +44,7 @@ class UserModel {
       avatar: json["avatar"] ?? "",
       gender: json["gender"] ?? "",
       city: json["city"] ?? "",
+      address: json["address"] ?? "",
       role: json["role"] ?? "user",
     );
   }
@@ -56,6 +60,7 @@ UserModel(
   avatar: $avatar,
   gender: $gender,
   city: $city,
+  address: $address,
   role: $role
 )
 ''';

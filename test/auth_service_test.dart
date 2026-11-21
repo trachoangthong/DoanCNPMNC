@@ -21,12 +21,19 @@ void main() {
       avatar: '',
       gender: 'Male',
       city: 'Ho Chi Minh',
+      address: '12 Nguyen Hue',
       role: 'user',
     );
 
     expect(await AuthService.register(user), isTrue);
     expect(await AuthService.register(user), isFalse);
     expect(await AuthService.isExistEmail('test@example.com'), isTrue);
+    expect(
+      (await AuthService.getAllUsers())
+          .firstWhere((UserModel item) => item.email == user.email)
+          .address,
+      '12 Nguyen Hue',
+    );
   });
 
   test('register preserves admin role for admin accounts', () async {
@@ -102,6 +109,7 @@ void main() {
         avatar: '',
         gender: 'Male',
         city: 'Ho Chi Minh',
+        address: '12 Nguyen Hue',
       );
       await AuthService.register(user);
       await AuthService.login(email: user.email, password: user.password);
@@ -112,6 +120,7 @@ void main() {
           fullName: 'Updated User',
           email: 'updated@example.com',
           phone: '0987654321',
+          address: '56 Le Loi',
         ),
         isTrue,
       );
@@ -121,6 +130,7 @@ void main() {
           fullName: 'Updated User',
           email: 'admin@gmail.com',
           phone: '0987654321',
+          address: '56 Le Loi',
         ),
         isFalse,
       );
@@ -129,6 +139,7 @@ void main() {
       expect(currentUser?.fullName, 'Updated User');
       expect(currentUser?.email, 'updated@example.com');
       expect(currentUser?.phone, '0987654321');
+      expect(currentUser?.address, '56 Le Loi');
     },
   );
 
